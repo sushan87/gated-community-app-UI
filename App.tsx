@@ -1,15 +1,11 @@
 import React from 'react';
-import {Text, TextInput, View} from 'react-native';
-import Register from './src/screens/Register'
-import Login from './src/screens/Login';
-
+import {View, Text} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import Bulletin from './src/screens/Bulletin';
 
 const App = () => {
-  return (
-    <View style={{ flex: 1 }}>
-      <Register />
-    </View>
-  );
+  return <Bulletin />;
 };
 
 export default App;

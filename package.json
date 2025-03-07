@@ -10,15 +10,20 @@
     "test": "jest"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/react-native-fontawesome": "^0.3.2",
     "@react-native-community/masked-view": "^0.1.11",
+    "@react-navigation/drawer": "^5.12.9",
     "@react-navigation/native": "^5.9.8",
     "@react-navigation/stack": "^5.14.9",
     "react": "18.2.0",
     "react-native": "0.73.11",
-    "react-native-gesture-handler": "^1.10.3",
-    "react-native-reanimated": "^3.6.1",
-    "react-native-safe-area-context": "^3.3.2",
-    "react-native-screens": "^2.18.1"
+    "react-native-paper": "^5.13.1",
+    "react-native-reanimated": "^3.6.0",
+    "react-native-safe-area-context": "^3.2.0",
+    "react-native-screens": "^2.18.1",
+    "react-native-vector-icons": "^10.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -29,6 +34,7 @@
     "@react-native/metro-config": "0.73.5",
     "@react-native/typescript-config": "0.73.1",
     "@types/react": "^18.2.6",
+    "@types/react-native-vector-icons": "^6.4.18",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.6.3",
     "eslint": "^8.19.0",
