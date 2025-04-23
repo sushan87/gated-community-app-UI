@@ -6,9 +6,18 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
-const Bulletin = () => {
+import {useWindowDimensions} from 'react-native';
+import {DrawerActions} from '@react-navigation/native';
+
+const Bulletin = ({props}) => {
   const [likedPosts, setLikedPosts] = React.useState({});
+
+  const navigation = useNavigation();
+
+  console.log('Props = ', props);
+  console.log('Navigation = ', navigation);
 
   const handleLike = index => {
     setLikedPosts(prev => ({
@@ -45,13 +54,22 @@ const Bulletin = () => {
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      {/* Header Section */}
       <View style={styles.header}>
+        <TouchableOpacity
+          style={styles.menuButton}
+          onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
+          <Text style={styles.menuIcon}>☰</Text>
+        </TouchableOpacity>
+
         <Text style={styles.headerTitle}>Bulletin Board</Text>
+
         <TouchableOpacity style={styles.refreshButton}>
           <Text style={styles.iconText}>↻</Text>
         </TouchableOpacity>
       </View>
 
+      {/* Bulletin Posts */}
       {bulletinPosts.map((item, index) => (
         <View key={index} style={styles.bulletinItem}>
           <View style={styles.postHeader}>
@@ -98,27 +116,13 @@ const Bulletin = () => {
           </View>
         </View>
       ))}
-
-      <View style={styles.couponSection}>
-        <View style={styles.couponHeader}>
-          <Text style={styles.couponTitle}>Meal Coupons</Text>
-          <View style={styles.activeBadge}>
-            <Text style={styles.activeText}>Active</Text>
-          </View>
-        </View>
-
-        <View style={styles.progressContainer}>
-          <View style={styles.progressBar}>
-            <View style={[styles.progressFill, {width: '20%'}]} />
-          </View>
-          <Text style={styles.progressText}>2/10 coupons redeemed</Text>
-        </View>
-
-        <TouchableOpacity style={styles.couponButton}>
-          <Text style={styles.couponButtonText}>View Coupon Dashboard</Text>
-          <Text style={styles.arrowIcon}>→</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity
+        style={styles.subscriptionButton}
+        onPress={() => navigation.navigate('Subscription')}>
+        <Text style={styles.subscriptionButtonText}>
+          Go to Subscription Page
+        </Text>
+      </TouchableOpacity>
 
       <View style={styles.footer}>
         <Text style={styles.footerText}>Pull down to refresh</Text>
@@ -139,6 +143,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 16,
   },
+  menuButton: {
+    padding: 8,
+  },
+  menuIcon: {
+    fontSize: 24,
+    color: '#32325D',
+  },
   headerTitle: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -150,16 +161,6 @@ const styles = StyleSheet.create({
   iconText: {
     fontSize: 18,
     color: '#8898AA',
-  },
-  likedIcon: {
-    color: '#5E72E4',
-  },
-  unlikedIcon: {
-    color: '#8898AA',
-  },
-  arrowIcon: {
-    fontSize: 16,
-    color: 'white',
   },
   bulletinItem: {
     backgroundColor: 'white',
@@ -251,70 +252,6 @@ const styles = StyleSheet.create({
     color: '#8898AA',
     fontSize: 14,
   },
-  couponSection: {
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 12,
-    marginVertical: 16,
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    elevation: 2,
-  },
-  couponHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  couponTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#32325D',
-  },
-  activeBadge: {
-    backgroundColor: '#2DCE89',
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 12,
-  },
-  activeText: {
-    color: 'white',
-    fontSize: 12,
-    fontWeight: '600',
-  },
-  progressContainer: {
-    marginBottom: 20,
-  },
-  progressBar: {
-    height: 8,
-    backgroundColor: '#E9ECEF',
-    borderRadius: 4,
-    marginBottom: 8,
-  },
-  progressFill: {
-    height: 8,
-    backgroundColor: '#5E72E4',
-    borderRadius: 4,
-  },
-  progressText: {
-    color: '#8898AA',
-    fontSize: 14,
-  },
-  couponButton: {
-    backgroundColor: '#5E72E4',
-    padding: 14,
-    borderRadius: 8,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  couponButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
   footer: {
     alignItems: 'center',
     paddingVertical: 20,
@@ -322,6 +259,19 @@ const styles = StyleSheet.create({
   footerText: {
     color: '#8898AA',
     fontSize: 14,
+  },
+
+  subscriptionButton: {
+    backgroundColor: '#5E72E4',
+    padding: 14,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  subscriptionButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
 

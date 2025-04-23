@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   SafeAreaView,
+  Alert,
 } from 'react-native';
 import React, {useState} from 'react';
 
@@ -18,20 +19,20 @@ const Register = ({navigation}) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState({});
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     let newErrors = {};
 
     // Validation patterns
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^[0-9]{10}$/; // Exactly 10 digits
-    const unitRegex = /^\d{2}[A-Za-z]{2}$/; //Two numbers + Two letters (E.g. 32CL)
+    const phoneRegex = /^[0-9]{10}$/;
+    const unitRegex = /^\d{2}[A-Za-z]{2}$/;
 
     if (!name.trim()) {
       newErrors.name = 'Name is required';
     }
+
     if (!unitRegex.test(unit)) newErrors.unit = 'Please enter a valid unit';
 
-    // Phone validation
     if (!phone.trim()) {
       newErrors.phone = 'Phone number is required';
     } else if (!phoneRegex.test(phone)) {
@@ -40,7 +41,6 @@ const Register = ({navigation}) => {
 
     if (!unit.trim()) newErrors.unit = 'Unit is required';
 
-    // Email validation
     if (!email.trim()) {
       newErrors.email = 'Email is required';
     } else if (!emailRegex.test(email)) {
@@ -52,19 +52,45 @@ const Register = ({navigation}) => {
       newErrors.password = 'Password must be at least 6 characters';
     if (!confirmPassword.trim())
       newErrors.confirmPassword = 'Confirm Password is required';
-    if (password && confirmPassword && password !== confirmPassword)
+    if (password !== confirmPassword)
       newErrors.confirmPassword = 'Passwords do not match';
 
     setErrors(newErrors);
-    if (Object.keys(newErrors).length === 0) {
-      console.log('Form Data:', {
-        name,
-        phone,
-        unit,
-        email,
-        password,
-        confirmPassword,
-      });
+    if (Object.keys(newErrors).length !== 0) return;
+
+    try {
+      const response = await fetch(
+        'https://98c7-223-185-33-135.ngrok-free.app/user/register',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            unitNumber: unit,
+            password,
+            phoneNumber: phone,
+          }),
+        },
+      );
+
+      const data = await response.json();
+
+      if (response.status === 201) {
+        Alert.alert('Success', 'Registration successful!', [
+          {
+            text: 'OK',
+            onPress: () => navigation.navigate('Login'),
+          },
+        ]);
+      } else {
+        Alert.alert('Registration Failed', data.message || 'Try again later.');
+      }
+    } catch (error) {
+      console.error('Registration Error:', error);
+      Alert.alert('Error', 'Something went wrong. Please try again later.');
     }
   };
 
@@ -81,6 +107,7 @@ const Register = ({navigation}) => {
             onChangeText={setName}
           />
           {errors.name && <Text style={styles.errorText}>{errors.name}</Text>}
+
           <TextInput
             style={[styles.input, errors.phone && styles.inputError]}
             placeholder="Enter your phone number"
@@ -91,6 +118,7 @@ const Register = ({navigation}) => {
             maxLength={10}
           />
           {errors.phone && <Text style={styles.errorText}>{errors.phone}</Text>}
+
           <TextInput
             style={[styles.input, errors.unit && styles.inputError]}
             placeholder="Enter your Unit (Eg 32CL)"
@@ -100,6 +128,7 @@ const Register = ({navigation}) => {
             maxLength={4}
           />
           {errors.unit && <Text style={styles.errorText}>{errors.unit}</Text>}
+
           <TextInput
             style={[styles.input, errors.email && styles.inputError]}
             placeholder="Enter your Email"
@@ -110,6 +139,7 @@ const Register = ({navigation}) => {
             onChangeText={setEmail}
           />
           {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
+
           <TextInput
             style={[styles.input, errors.password && styles.inputError]}
             placeholder="Enter your Password"
@@ -121,6 +151,7 @@ const Register = ({navigation}) => {
           {errors.password && (
             <Text style={styles.errorText}>{errors.password}</Text>
           )}
+
           <TextInput
             style={[styles.input, errors.confirmPassword && styles.inputError]}
             placeholder="Confirm your Password"
@@ -132,6 +163,7 @@ const Register = ({navigation}) => {
           {errors.confirmPassword && (
             <Text style={styles.errorText}>{errors.confirmPassword}</Text>
           )}
+
           <TouchableOpacity style={styles.button} onPress={handleRegister}>
             <Text style={styles.buttonText}>Register</Text>
           </TouchableOpacity>
@@ -196,7 +228,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-
   loginText: {
     marginTop: 15,
     textAlign: 'center',

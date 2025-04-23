@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.gatedcommunityapp-mergeDebugResources-32:/values-en-rCA/values-en-rCA.xml",
+            "outputFile": "com.gatedcommunityapp-mergeDebugResources-34:/values-en-rCA/values-en-rCA.xml",
             "map": [
                 {
                     "source": "/Users/saatwiksen/.gradle/caches/transforms-3/719997e67e393b1fa12fe53b26656deb/transformed/core-1.9.0/res/values-en-rCA/values-en-rCA.xml",

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.gatedcommunityapp-mergeDebugResources-32:/values-ps/values-ps.xml",
+            "outputFile": "com.gatedcommunityapp-mergeDebugResources-34:/values-ps/values-ps.xml",
             "map": [
                 {
                     "source": "/Users/saatwiksen/.gradle/caches/transforms-3/b304cff5aa7cdb71e1514507b35519ea/transformed/jetified-react-android-0.73.11-debug/res/values-ps/values-ps.xml",

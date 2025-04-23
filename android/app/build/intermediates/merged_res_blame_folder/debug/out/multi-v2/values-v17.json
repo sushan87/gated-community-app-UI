@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.gatedcommunityapp-mergeDebugResources-32:/values-v17/values-v17.xml",
+            "outputFile": "com.gatedcommunityapp-mergeDebugResources-34:/values-v17/values-v17.xml",
             "map": [
                 {
                     "source": "/Users/saatwiksen/.gradle/caches/transforms-3/fe12fed8ecfdfacaf3d7445bbcb929fa/transformed/appcompat-1.6.1/res/values-v17/values-v17.xml",
